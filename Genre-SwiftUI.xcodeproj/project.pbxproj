@@ -80,14 +80,9 @@
 		945D127A24A6CF12008BDBE1 /* Genre-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				94F2184024A6F2F200DABDDB /* Genre-SwiftUI.entitlements */,
-				945D127B24A6CF12008BDBE1 /* AppDelegate.swift */,
-				945D127D24A6CF12008BDBE1 /* SceneDelegate.swift */,
-				945D127F24A6CF12008BDBE1 /* ContentView.swift */,
-				945D128124A6CF14008BDBE1 /* Assets.xcassets */,
-				945D128624A6CF14008BDBE1 /* LaunchScreen.storyboard */,
-				945D128924A6CF14008BDBE1 /* Info.plist */,
-				945D128324A6CF14008BDBE1 /* Preview Content */,
+				94F2184324A7A43D00DABDDB /* Resources */,
+				94F2184224A7A43100DABDDB /* Views */,
+				94F2184124A7A41500DABDDB /* App Settings */,
 			);
 			path = "Genre-SwiftUI";
 			sourceTree = "<group>";
@@ -107,6 +102,35 @@
 				945D129424A6CF14008BDBE1 /* Info.plist */,
 			);
 			path = "Genre-SwiftUITests";
+			sourceTree = "<group>";
+		};
+		94F2184124A7A41500DABDDB /* App Settings */ = {
+			isa = PBXGroup;
+			children = (
+				945D127B24A6CF12008BDBE1 /* AppDelegate.swift */,
+				945D127D24A6CF12008BDBE1 /* SceneDelegate.swift */,
+				94F2184024A6F2F200DABDDB /* Genre-SwiftUI.entitlements */,
+				945D128924A6CF14008BDBE1 /* Info.plist */,
+			);
+			path = "App Settings";
+			sourceTree = "<group>";
+		};
+		94F2184224A7A43100DABDDB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				945D127F24A6CF12008BDBE1 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		94F2184324A7A43D00DABDDB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				945D128324A6CF14008BDBE1 /* Preview Content */,
+				945D128124A6CF14008BDBE1 /* Assets.xcassets */,
+				945D128624A6CF14008BDBE1 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,12 +388,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Genre-SwiftUI/Genre-SwiftUI.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Genre-SwiftUI/App Settings/Genre-SwiftUI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Genre-SwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Genre-SwiftUI/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = T6MXF72738;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Genre-SwiftUI/Info.plist";
+				INFOPLIST_FILE = "Genre-SwiftUI/App Settings/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -386,12 +410,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Genre-SwiftUI/Genre-SwiftUI.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Genre-SwiftUI/App Settings/Genre-SwiftUI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Genre-SwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Genre-SwiftUI/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = T6MXF72738;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Genre-SwiftUI/Info.plist";
+				INFOPLIST_FILE = "Genre-SwiftUI/App Settings/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
