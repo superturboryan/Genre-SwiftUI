@@ -38,6 +38,7 @@
 		945D128E24A6CF14008BDBE1 /* Genre-SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Genre-SwiftUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		945D129224A6CF14008BDBE1 /* Genre_SwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre_SwiftUITests.swift; sourceTree = "<group>"; };
 		945D129424A6CF14008BDBE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94F2184024A6F2F200DABDDB /* Genre-SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Genre-SwiftUI.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		945D127A24A6CF12008BDBE1 /* Genre-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				94F2184024A6F2F200DABDDB /* Genre-SwiftUI.entitlements */,
 				945D127B24A6CF12008BDBE1 /* AppDelegate.swift */,
 				945D127D24A6CF12008BDBE1 /* SceneDelegate.swift */,
 				945D127F24A6CF12008BDBE1 /* ContentView.swift */,
@@ -362,6 +364,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Genre-SwiftUI/Genre-SwiftUI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Genre-SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = T6MXF72738;
@@ -373,6 +376,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.RyanDavidForsyth.Genre-SwiftUI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -382,6 +386,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Genre-SwiftUI/Genre-SwiftUI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Genre-SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = T6MXF72738;
@@ -393,6 +398,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.RyanDavidForsyth.Genre-SwiftUI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
