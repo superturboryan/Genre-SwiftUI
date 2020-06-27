@@ -18,6 +18,7 @@ struct ContentView: View {
     }
 
     @State var x : [CGFloat] = Array(repeating: 0.0, count: cardCount)
+    var y: [CGFloat] = [0.0,-1.0,-2.0,-3.0,-4.0,-5.0]
     @State var degrees : [Double] = Array(repeating: 0.0, count: cardCount)
     
     var body: some View {
@@ -27,8 +28,8 @@ struct ContentView: View {
                 Spacer()
                 ZStack {
                     ForEach(0..<cardCount, id: \.self) { i in
-                        Card(text: "First word")
-                            .offset(x: self.x[i])
+                        Card(offsets: self.x, index: i)
+                            .offset(x: self.x[i], y:self.y[i]*4.0)
                             .rotationEffect(.init(degrees: self.degrees[i]))
                             .gesture(DragGesture().onChanged({ (value) in
                                 
@@ -57,7 +58,6 @@ struct ContentView: View {
                                         self.degrees[i] = 0
                                     }
                                 }
-                                
                             }))
                     }
                 }.padding(10)
@@ -75,7 +75,8 @@ struct ContentView: View {
 }
 
 struct Card: View {
-    var text: String
+    var offsets: [CGFloat]
+    var index: Int
     var body: some View {
         VStack {
             Text("Gender")
@@ -85,10 +86,9 @@ struct Card: View {
                 .padding()
             HStack(spacing: 25) {
                 Button(action: {
-                    //Action
-                }) {
                     
-                    Image(systemName: "message.fill")
+                }) {
+                    Image(systemName: "hand.thumbsdown.fill")
                     .resizable()
                     .frame(width: 25, height: 25)
                     .padding()
@@ -96,10 +96,9 @@ struct Card: View {
                 .background(Color.black.opacity(0.02))
                 .clipShape(Circle())
                 Button(action: {
-                    //Action
-                }) {
                     
-                    Image(systemName: "message.fill")
+                }) {
+                    Image(systemName: "hand.raised.fill")
                         .resizable()
                         .frame(width: 25, height: 25)
                         .padding()
@@ -107,21 +106,9 @@ struct Card: View {
                 .background(Color.black.opacity(0.02))
                 .clipShape(Circle())
                 Button(action: {
-                    //Action
-                }) {
                     
-                    Image(systemName: "message.fill")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .padding()
-                }
-                .background(Color.black.opacity(0.02))
-                .clipShape(Circle())
-                Button(action: {
-                    //Action
                 }) {
-                    
-                    Image(systemName: "message.fill")
+                    Image(systemName: "hand.thumbsup.fill")
                         .resizable()
                         .frame(width: 25, height: 25)
                         .padding()
@@ -134,6 +121,7 @@ struct Card: View {
         .frame(height: 300)
         .background(Color.white)
         .cornerRadius(25)
+        .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
     }
 }
 
