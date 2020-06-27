@@ -11,6 +11,11 @@ import SwiftUI
 let cardCount = 6
 
 struct ContentView: View {
+    
+    func resetState() {
+        x = Array(repeating: 0.0, count: cardCount)
+        degrees = Array(repeating: 0.0, count: cardCount)
+    }
 
     @State var x : [CGFloat] = Array(repeating: 0.0, count: cardCount)
     @State var degrees : [Double] = Array(repeating: 0.0, count: cardCount)
@@ -18,45 +23,54 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color.black.opacity(0.1).edgesIgnoringSafeArea(.all)
-            ZStack {
-                ForEach(0..<cardCount, id: \.self) { i in
-                    Card(text: "First word")
-                        .offset(x: self.x[i])
-                        .rotationEffect(.init(degrees: self.degrees[i]))
-                        .gesture(DragGesture().onChanged({ (value) in
-                      
-                            self.x[i] = value.translation.width
-                            self.degrees[i] = 8
-                            
-                        }).onEnded({ (value) in
-                            
-                            if value.translation.width > 0 {
-                                if value.translation.width > 100 {
-                                    self.x[i] = 500
-                                    self.degrees[i] = 15
+            VStack {
+                Spacer()
+                ZStack {
+                    ForEach(0..<cardCount, id: \.self) { i in
+                        Card(text: "First word")
+                            .offset(x: self.x[i])
+                            .rotationEffect(.init(degrees: self.degrees[i]))
+                            .gesture(DragGesture().onChanged({ (value) in
+                                
+                                self.x[i] = value.translation.width
+                                self.degrees[i] = 5 * (value.translation.width > 0 ? 1 : -1)
+                                
+                            }).onEnded({ (value) in
+                                
+                                if value.translation.width > 0 {
+                                    if value.translation.width > 100 {
+                                        self.x[i] = 500
+                                        self.degrees[i] = 15
+                                    }
+                                    else {
+                                        self.x[i] = 0
+                                        self.degrees[i] = 0
+                                    }
                                 }
                                 else {
-                                    self.x[i] = 0
-                                    self.degrees[i] = 0
+                                    if value.translation.width < -100 {
+                                        self.x[i] = -500
+                                        self.degrees[i] = -15
+                                    }
+                                    else {
+                                        self.x[i] = 0
+                                        self.degrees[i] = 0
+                                    }
                                 }
-                            }
-                            else {
-                                if value.translation.width < -100 {
-                                    self.x[i] = -500
-                                    self.degrees[i] = -15
-                                }
-                                else {
-                                    self.x[i] = 0
-                                    self.degrees[i] = 0
-                                }
-                            }
-                            
-                        }))
-                }
-            }.padding(10)
-            .animation(.default)
+                                
+                            }))
+                    }
+                }.padding(10)
+                .animation(.default)
+                Spacer()
+                Button(action: {
+                    self.resetState()
+                }, label: {
+                    Text("Reset")
+                })
+                .padding()
+            }
         }
-        
     }
 }
 
