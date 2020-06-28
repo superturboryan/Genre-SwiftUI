@@ -7,10 +7,17 @@
 //
 
 import SwiftUI
+import Combine
+
+enum GameViewAction {
+    case restart
+}
 
 struct GameView: View {
     
     @ObservedObject var dataSource: GameViewDataSource
+    
+    let gameViewActionPublisher = PassthroughSubject<GameViewAction,Never>()
     
     var body: some View {
         ZStack {
@@ -69,7 +76,7 @@ struct GameView: View {
     }
     
     func restartGame() {
-        dataSource.restartGame()
+        gameViewActionPublisher.send(.restart)
     }
 }
 

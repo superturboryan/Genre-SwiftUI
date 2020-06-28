@@ -7,13 +7,16 @@
 //
 
 import SwiftUI
+import Combine
 
 class GameViewController: UIHostingController<GameView> {
     
     let wordManager = WordManager.sharedInstance
+    var reducer: Cancellable?
     
     override init(rootView: GameView) {
         super.init(rootView: rootView)
+        configureReducerActions()
     }
     
     @objc required dynamic init?(coder aDecoder: NSCoder) {
@@ -26,7 +29,16 @@ class GameViewController: UIHostingController<GameView> {
     }
     
     func getWordsForGame() {
-        print("Loading words for game")
-        rootView.dataSource.words = self.wordManager.getRandomWordsFor(count: 10)
+        rootView.dataSource.words = wordManager.getRandomWordsFor(count: 10)
+    }
+    
+    func configureReducerActions() {
+        self.reducer = rootView.gameViewActionPublisher.sink { (action) in
+            switch(action) {
+            case .restart:
+                self.getWordsForGame()
+
+            }
+        }
     }
 }
