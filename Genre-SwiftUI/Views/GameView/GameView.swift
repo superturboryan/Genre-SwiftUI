@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  GameView.swift
 //  Genre-SwiftUI
 //
 //  Created by Ryan David Forsyth on 2020-06-26.
@@ -8,67 +8,57 @@
 
 import SwiftUI
 
-let cardCount = 6
-
-struct ContentView: View {
+struct GameView: View {
     
-    func resetState() {
-        dragAmount = Array(repeating: .zero, count: cardCount)
-        degrees = Array(repeating: 0.0, count: cardCount)
-        self.selectedCard = 5
-    }
-
-    @State var dragAmount : [CGSize] = Array(repeating: .zero, count: cardCount)
-    @State var degrees : [Double] = Array(repeating: 0.0, count: cardCount)
-    @State var selectedCard : Int = cardCount - 1
+    @ObservedObject var dataSource: GameViewDataSource
     
     var body: some View {
         ZStack {
             Color.black.opacity(0.1).edgesIgnoringSafeArea(.all)
             Button("Reset") {
-                self.resetState()
+                self.restartGame()
             }
             .padding()
             ZStack {
-                ForEach(0..<cardCount, id: \.self) { i in
-                    Card()
-                        .offset(self.dragAmount[i])
-                        .rotationEffect(.init(degrees: self.degrees[i]))
-                        .scaleEffect(self.selectedCard == i ? 1 : 0.8)
-                        .shadow(color: Color.black.opacity(0.07), radius: self.selectedCard == i ? 10 : 5, x: 0, y: 2)
+                ForEach(0..<self.dataSource.words.count, id: \.self) { i in
+                    Card(word: self.dataSource.words[i])
+                        .offset(self.dataSource.dragAmount[i])
+                        .rotationEffect(.init(degrees: self.dataSource.degrees[i]))
+                        .scaleEffect(self.dataSource.selectedCard == i ? 1 : 0.8)
+                        .shadow(color: Color.black.opacity(0.07), radius: self.dataSource.selectedCard == i ? 10 : 5, x: 0, y: 2)
                         .gesture(
                             DragGesture()
                                 .onChanged({ (value) in
                             
-                                    self.dragAmount[i] = value.translation
+                                    self.dataSource.dragAmount[i] = value.translation
                                     
                                     if abs(value.translation.width) > 20 {
-                                        self.degrees[i] = 5 * (value.translation.width > 0 ? 1 : -1)
+                                        self.dataSource.degrees[i] = 5 * (value.translation.width > 0 ? 1 : -1)
                                     }
-                                    else { self.degrees[i] = 0 }
+                                    else { self.dataSource.degrees[i] = 0 }
                             
                                 }).onEnded({ (value) in
                             
                                     if value.translation.width > 0 {
                                         if value.translation.width > 100 {
-                                            self.dragAmount[i].width = 500
-                                            self.degrees[i] = 15
-                                            self.selectedCard -= 1
+                                            self.dataSource.dragAmount[i].width = 500
+                                            self.dataSource.degrees[i] = 15
+                                            self.dataSource.selectedCard -= 1
                                         }
                                         else {
-                                            self.dragAmount[i] = .zero
-                                            self.degrees[i] = 0
+                                            self.dataSource.dragAmount[i] = .zero
+                                            self.dataSource.degrees[i] = 0
                                         }
                                     }
                                     else {
                                         if value.translation.width < -100 {
-                                            self.dragAmount[i].width = -500
-                                            self.degrees[i] = -15
-                                            self.selectedCard -= 1
+                                            self.dataSource.dragAmount[i].width = -500
+                                            self.dataSource.degrees[i] = -15
+                                            self.dataSource.selectedCard -= 1
                                         }
                                         else {
-                                            self.dragAmount[i] = .zero
-                                            self.degrees[i] = 0
+                                            self.dataSource.dragAmount[i] = .zero
+                                            self.dataSource.degrees[i] = 0
                                         }
                                     }
                         }))
@@ -77,14 +67,21 @@ struct ContentView: View {
             .animation(.default)
         }
     }
+    
+    func restartGame() {
+        dataSource.restartGame()
+    }
 }
 
 struct Card: View {
+    
+    var word: Word
+    
     var body: some View {
         VStack {
-            Text("Gender")
+            Text(word.gender == true ? "Masc" : "Fem")
                 .padding()
-            Text("Word")
+            Text(word.word ?? "")
                 .font(.largeTitle)
                 .padding()
             HStack(spacing: 25) {
@@ -128,9 +125,9 @@ struct Card: View {
 }
 
 
-struct ContentView_Previews: PreviewProvider {
+struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        GameView(dataSource: GameViewDataSource())
     }
 }
 
