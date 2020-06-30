@@ -11,6 +11,7 @@ import Foundation
 import CoreData
 
 
-public class Word: NSManagedObject {
+public class Word: NSManagedObject, Identifiable {
 
+    public let id = UUID()
 }

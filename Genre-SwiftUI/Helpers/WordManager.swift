@@ -13,7 +13,6 @@ import CoreData
 
 class WordManager: NSObject {
     
-    
     //MARK: Variables
     
     static let sharedInstance = WordManager()
