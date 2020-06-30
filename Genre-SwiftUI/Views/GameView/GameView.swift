@@ -28,24 +28,27 @@ struct GameView: View {
                 self.dataSource.restartGame(withNewWords:true)
                 }
             .padding()
-            ZStack {
-                ForEach(0..<self.dataSource.words.count, id: \.self) { i in
-                    CardView(word: self.dataSource.words[i])
-                        .offset(self.dataSource.dragAmount[i])
-                        .rotationEffect(.init(degrees: self.dataSource.degrees[i]))
-                        .scaleEffect(self.dataSource.currentQuestionIndex == i ? 1 : 0.8)
-                        .shadow(color: Color.black.opacity(0.07), radius: self.dataSource.currentQuestionIndex == i ? 10 : 5, x: 0, y: 2)
-                        .gesture(
-                            DragGesture()
-                                .onChanged({ (value) in
-                                    self.dataSource.updateCardDragOnChanged(atIndex: i, with: value.translation)
-                                }).onEnded({ (value) in
-                                    self.dataSource.updateCardDragOnEnded(atIndex: i, with: value.translation)
-                        }))
+            VStack {
+                Text("\(self.dataSource.counter)")
+                ZStack {
+                    ForEach(0..<self.dataSource.words.count, id: \.self) { i in
+                        CardView(word: self.dataSource.words[i])
+                            .offset(self.dataSource.dragAmount[i])
+                            .rotationEffect(.init(degrees: self.dataSource.degrees[i]))
+                            .scaleEffect(self.dataSource.currentQuestionIndex == i ? 1 : 0.8)
+                            .shadow(color: Color.black.opacity(0.07), radius: self.dataSource.currentQuestionIndex == i ? 10 : 5, x: 0, y: 2)
+                            .gesture(
+                                DragGesture()
+                                    .onChanged({ (value) in
+                                        self.dataSource.updateCardDragOnChanged(atIndex: i, with: value.translation)
+                                    }).onEnded({ (value) in
+                                        self.dataSource.updateCardDragOnEnded(atIndex: i, with: value.translation)
+                                    }))
+                    }
                 }
+                .padding(10)
+                .animation(.default)
             }
-            .padding(10)
-            .animation(.default)
         }
     }
 }

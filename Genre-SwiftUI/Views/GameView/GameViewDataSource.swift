@@ -25,6 +25,8 @@ class GameViewDataSource: ObservableObject {
     @Published var dragAmount = [CGSize]()
     @Published var degrees = [Double]()
     @Published var currentQuestionIndex = 0
+    @Published var counter = 0
+    var timer = Timer()
     
     var userScore = 0
     
@@ -33,10 +35,6 @@ class GameViewDataSource: ObservableObject {
     var masculineIncorrect : Int = 0
     var feminineCorrect: Int = 0
     var feminineIncorrect: Int = 0
-    
-    //Timer variables
-    var counter = 0.0
-    var timer = Timer()
     
     func updateCardDragOnChanged(atIndex wordIndex:Int, with translation:CGSize) {
         dragAmount[wordIndex] = translation
@@ -53,9 +51,11 @@ class GameViewDataSource: ObservableObject {
             if translation.width > 100 {
                 dragAmount[wordIndex].width = 500
                 degrees[wordIndex] = 15
+                
+                checkAnswer(pickedAnswer: true) ? print("Correct!") : print("Incorrect!")
                 currentQuestionIndex -= 1
             }
-            else {
+            else { // Reset card position
                 dragAmount[wordIndex] = .zero
                 degrees[wordIndex] = 0
             }
@@ -64,13 +64,26 @@ class GameViewDataSource: ObservableObject {
             if translation.width < -100 {
                 dragAmount[wordIndex].width = -500
                 degrees[wordIndex] = -15
+                
+                checkAnswer(pickedAnswer: false) ? print("Correct!") : print("Incorrect!")
                 currentQuestionIndex -= 1
             }
-            else {
+            else { // Reset card position
                 dragAmount[wordIndex] = .zero
                 degrees[wordIndex] = 0
             }
         }
+    }
+    
+    func restartGame(withNewWords toggle:Bool) {
+        
+        loadSettings()
+        
+        toggle ?
+            loadNewGameWords() :
+            resetGameState()
+        
+        startTimer()
     }
     
     func resetGameState() {
@@ -83,17 +96,6 @@ class GameViewDataSource: ObservableObject {
         masculineIncorrect = 0
         feminineCorrect = 0
         feminineIncorrect = 0
-    }
-    
-    func restartGame(withNewWords toggle:Bool) {
-        
-        loadSettings()
-        
-        toggle ?
-            loadNewGameWords() :
-            resetGameState()
-
-        startTimer()
     }
     
     func finishGame() {
