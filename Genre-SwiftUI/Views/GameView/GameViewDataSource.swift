@@ -22,6 +22,8 @@ class GameViewDataSource: ObservableObject {
         }
     }
 
+    @Published var gameIsFinished = false
+    
     @Published var dragAmount = [CGSize]()
     @Published var degrees = [Double]()
     @Published var currentQuestionIndex = 0
@@ -46,32 +48,37 @@ class GameViewDataSource: ObservableObject {
     }
     
     func updateCardDragOnEnded(atIndex wordIndex:Int, with translation:CGSize) {
-        if translation.width > 0 {
-            
+        if translation.width > 0 { // Dragged right
             if translation.width > 100 {
                 dragAmount[wordIndex].width = 500
                 degrees[wordIndex] = 15
                 
-                checkAnswer(pickedAnswer: true) ? print("Correct!") : print("Incorrect!")
+                checkAnswer(selectedGender: true) ? print("Correct!") : print("Incorrect!")
                 currentQuestionIndex -= 1
+                print(currentQuestionIndex)
             }
             else { // Reset card position
                 dragAmount[wordIndex] = .zero
                 degrees[wordIndex] = 0
             }
         }
-        else {
+        else { // Dragged left
             if translation.width < -100 {
                 dragAmount[wordIndex].width = -500
                 degrees[wordIndex] = -15
                 
-                checkAnswer(pickedAnswer: false) ? print("Correct!") : print("Incorrect!")
+                checkAnswer(selectedGender: false) ? print("Correct!") : print("Incorrect!")
                 currentQuestionIndex -= 1
+                print(currentQuestionIndex)
             }
             else { // Reset card position
                 dragAmount[wordIndex] = .zero
                 degrees[wordIndex] = 0
             }
+        }
+        
+        if currentQuestionIndex == -1 {
+            finishGame()
         }
     }
     
@@ -82,6 +89,8 @@ class GameViewDataSource: ObservableObject {
         toggle ?
             loadNewGameWords() :
             resetGameState()
+        
+        gameIsFinished = false
         
         startTimer()
     }
@@ -99,6 +108,9 @@ class GameViewDataSource: ObservableObject {
     }
     
     func finishGame() {
+        withAnimation {
+           self.gameIsFinished = true
+        }
         self.timer.invalidate()
     }
     
@@ -178,14 +190,13 @@ class GameViewDataSource: ObservableObject {
     }
     
     //MARK:- Check Answer
-    func checkAnswer(pickedAnswer: Bool) -> Bool {
+    func checkAnswer(selectedGender: Bool) -> Bool {
         
         let currentWord = words[currentQuestionIndex]
-        let correctAnswer = currentWord.gender
-        let correctResult = pickedAnswer == correctAnswer
-        let answer = Answer(correct: correctResult, gender: pickedAnswer)
+        let correctGender = currentWord.gender
+        let correctResult = selectedGender == correctGender
         
-        addAnswerToEngine(answer)
+        addAnswerToEngine(Answer(correct: correctResult, gender: selectedGender))
         
         if correctResult {
             incrementUserScore()
