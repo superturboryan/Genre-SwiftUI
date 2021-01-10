@@ -28,6 +28,7 @@ class GameViewDataSource: ObservableObject {
     @Published var degrees = [Double]()
     @Published var currentQuestionIndex = 0
     @Published var counter = 0
+    
     var timer = Timer()
     
     var userScore = 0
@@ -108,9 +109,7 @@ class GameViewDataSource: ObservableObject {
     }
     
     func finishGame() {
-        withAnimation {
-           self.gameIsFinished = true
-        }
+        self.gameIsFinished = true
         self.timer.invalidate()
     }
     
@@ -221,7 +220,7 @@ class GameViewDataSource: ObservableObject {
         
         let wordToIncrement = WordManager.sharedInstance.getWordFor(string: word.word!)!
         
-        if (correct) {
+        if correct {
             wordToIncrement.correctCount += 1
         }
         else {
@@ -229,5 +228,12 @@ class GameViewDataSource: ObservableObject {
         }
         
         WordManager.sharedInstance.saveChangesToCoreData()
+    }
+}
+
+struct GameViewDataSource_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
     }
 }

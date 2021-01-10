@@ -15,9 +15,11 @@ struct CardView: View {
     var body: some View {
         VStack {
             Text(word.gender == true ? "Masc" : "Fem")
+                .foregroundColor(.black)
                 .padding()
             Text(word.word ?? "")
                 .font(.largeTitle)
+                .foregroundColor(.black)
                 .padding()
             HStack(spacing: 25) {
                 Button(action: {
@@ -62,10 +64,13 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        let randomWord = WordManager.sharedInstance.getRandomWordsFor(count: 1)
+        let randomWord = WordManager.sharedInstance
+            .getRandomWordsFor(count: 1)
         return ZStack {
             Color.black.opacity(0.1).edgesIgnoringSafeArea(.all)
-            CardView(word: randomWord.first!).frame(width:200, height: 300)
+            CardView(word: randomWord.first!)
+                .frame(width:200, height: 300)
         }
+        .preferredColorScheme(.dark)
     }
 }
